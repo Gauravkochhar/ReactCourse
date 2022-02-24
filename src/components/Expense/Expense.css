@@ -1,0 +1,10 @@
+.expense-wrapper {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+p {
+    font-size: 15px;
+    font-weight: 500;
+}
