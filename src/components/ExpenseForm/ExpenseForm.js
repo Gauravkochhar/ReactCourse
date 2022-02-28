@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './ExpenseForm.css';
+import Button from '../ui-components/Button/Button';
 
 export const ExpenseForm = (props) => {
     const [ invalidFormState, setInvalidFormState] = useState({
@@ -28,7 +29,12 @@ export const ExpenseForm = (props) => {
         })
     }
     
+    function onStyleBtnClick() {
+        alert("Button clicked");
+    }
+
     return (
+        <div>
         <form onSubmit={onSubmitExpense}>
             <div className='form-control'>
             {/* style={{borderColor: invalidForm ? 'red': 'transparent'}} */}
@@ -41,6 +47,8 @@ export const ExpenseForm = (props) => {
             </div>
             <button type="submit">Add Expense</button>
         </form>
+        <Button type="button" buttonColor="yellow" onClick={onStyleBtnClick}>Styled button</Button>
+        </div>
     )
 }
 
