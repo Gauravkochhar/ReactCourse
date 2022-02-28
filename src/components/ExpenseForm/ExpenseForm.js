@@ -2,18 +2,22 @@ import { useState } from 'react';
 import './ExpenseForm.css';
 
 export const ExpenseForm = (props) => {
+    const [ invalidFormState, setInvalidFormState] = useState({
+        name: false,
+        amount: false
+    });
     const [ formValue, setFromValue] = useState({
         id: '',
         name:'',
         amount: 0
     });
 
-    function onExpenseAdded() {
-
-    }
-
     function onSubmitExpense(event) {
         event.preventDefault();
+        setInvalidFormState({
+            name: formValue.name ? false: true,
+            amount: formValue.amount > 0 ? false: true
+        })
         props.notifyToParent({...formValue, id: Math.random().toString()});
     }
 
@@ -26,12 +30,13 @@ export const ExpenseForm = (props) => {
     
     return (
         <form onSubmit={onSubmitExpense}>
-            <div>
-            <input type="text" placeholder='Expense Name' name="name" value={formValue.name}
+            <div className='form-control'>
+            {/* style={{borderColor: invalidForm ? 'red': 'transparent'}} */}
+            <input className={`${invalidFormState.name ? 'invalid-input': ''}`}  type="text" placeholder='Expense Name' name="name" value={formValue.name}
             onChange={(e) => {onInput('name', e)}}></input>
             </div>
-            <div>
-            <input type="number" placeholder='Expense Amount' name="amount" value={formValue.amount}
+            <div className='form-control'>
+            <input className={`${invalidFormState.amount ? 'invalid-input': ''}`} type="number" placeholder='Expense Amount' name="amount" value={formValue.amount}
             onChange={(e) => {onInput('amount', e)}}></input>
             </div>
             <button type="submit">Add Expense</button>

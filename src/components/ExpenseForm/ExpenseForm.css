@@ -1,0 +1,7 @@
+.form-control input {
+    border-color: transparent;
+}
+
+.form-control .invalid-input {
+    border-color: red;
+}
