@@ -47,7 +47,7 @@ export const ExpenseForm = (props) => {
             </div>
             <button type="submit">Add Expense</button>
         </form>
-        <Button type="button" buttonColor="yellow" onClick={onStyleBtnClick}>Styled button</Button>
+        <Button invalidFormState={invalidFormState} type="button" buttonColor="yellow" onClick={onStyleBtnClick}>Styled button</Button>
         </div>
     )
 }

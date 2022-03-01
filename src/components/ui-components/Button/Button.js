@@ -11,7 +11,7 @@ const Button = styled.button`
 }
 
 &:hover {
-    background-color: ${props => (props.invalidForm ? 'red': '#ccc')};
+    background-color: ${props => (props.invalidFormState.name ? 'red': '#ccc')};
     color: white;
 }
 `;
