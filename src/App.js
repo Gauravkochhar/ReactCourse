@@ -15,24 +15,15 @@ function App() {
 
   }
 
-  function deleteItem(index) {
-    let newArray = itemList.filter((item, i) => !(i == index));
-    setItemList(newArray);
+  function onDeleteExpense(expenseId) {
+    const newExpenseList = expenseList.filter(expenseItem => expenseItem.id !== expenseId)
+    setExpenseList(newExpenseList);
   }
 
   return (
     <HomepageWrapper className="main-wrapper"> 
     <ExpenseForm notifyToParent={onNewExpenseAdded}/>
-    <ExpenseList expenseList={expenseList}/>
-    {
-      itemList.map((item, i) => {
-        return <div>
-          <div key={i}>{item}
-            <button onClick={() => deleteItem(i)}>Delete</button>
-          </div>
-        </div>;
-      })
-    }
+    <ExpenseList expenseList={expenseList} onDeleteExpense={onDeleteExpense}/>
     </HomepageWrapper>
   );
 }

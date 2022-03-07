@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import './ExpenseForm.css';
 import Button from '../ui-components/Button/Button';
 
+export const Modal = (props) => {
+    return <><p>{props.title}</p></>;
+}
 export const ExpenseForm = (props) => {
+    const nameRef = useRef();
     const [ invalidFormState, setInvalidFormState] = useState({
         name: false,
         amount: false
@@ -15,6 +20,7 @@ export const ExpenseForm = (props) => {
 
     function onSubmitExpense(event) {
         event.preventDefault();
+        console.log(nameRef.current.value);
         setInvalidFormState({
             name: formValue.name ? false: true,
             amount: formValue.amount > 0 ? false: true
@@ -34,11 +40,12 @@ export const ExpenseForm = (props) => {
     }
 
     return (
-        <div>
+        <React.Fragment>
+        {/* <>{ReactDOM.createPortal(<Modal title="This is Modal Title" />, document.getElementById('backdrop-root'))}</> */}
         <form onSubmit={onSubmitExpense}>
             <div className='form-control'>
             {/* style={{borderColor: invalidForm ? 'red': 'transparent'}} */}
-            <input className={`${invalidFormState.name ? 'invalid-input': ''}`}  type="text" placeholder='Expense Name' name="name" value={formValue.name}
+            <input ref={nameRef} className={`${invalidFormState.name ? 'invalid-input': ''}`}  type="text" placeholder='Expense Name' name="name" value={formValue.name}
             onChange={(e) => {onInput('name', e)}}></input>
             </div>
             <div className='form-control'>
@@ -48,7 +55,7 @@ export const ExpenseForm = (props) => {
             <button type="submit">Add Expense</button>
         </form>
         <Button invalidFormState={invalidFormState} type="button" buttonColor="yellow" onClick={onStyleBtnClick}>Styled button</Button>
-        </div>
+        </React.Fragment>
     )
 }
 
