@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const UserLoginForm = (props) => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState('');
+    const [ isEmailValid, setIsEmailValid] = useState(false);
+    const [password, setPassword] = useState('');
+    const [isPassValid, setIsPassValid] = useState(false);
+    const [formValid, setFormValid] = useState(false);
 
-    if(localStorage.getItem('isUserLoggedIn') === 'true') {
-        props.updateLoginState(true);
-    } else {
-        props.updateLoginState(false);
-    }
+    useEffect(() => {
+        console.log('reevaluate useeffect code')
+        const emailValidate = email.includes('@') && (email.length > 6);
+        const passValidate = (password.length > 6);
+        setIsEmailValid(() => {
+            return emailValidate;
+        });
+        setIsPassValid(() => {
+            return passValidate;
+        });
+        setFormValid(() => {
+            return emailValidate && passValidate;
+        });
+    }, [email, password])
     
     function emailChangeHandler(e) {
         setEmail(e.target.value);
@@ -42,7 +54,7 @@ export const UserLoginForm = (props) => {
             <input type="password" placeholder='Passsword' name="password" value={password}
             onChange={(e) => passwordChangeHandler(e)}></input>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" disabled={!formValid}>Login</button>
         </form>
     </React.Fragment>
 }
