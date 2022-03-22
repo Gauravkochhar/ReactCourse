@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react';
-
-
+import AuthContext from '../../../store/AuthContext/AuthContext';
 
 export const UserLoginForm = (props) => {
     const loginFormReducer = (oldState, action) => {
@@ -28,6 +27,10 @@ export const UserLoginForm = (props) => {
     const initialState = { email: {value: '', isValid: ''}, password: {value: '', isValid: ''}};
     const [ state, dispatchFn] = useReducer(loginFormReducer, initialState);
     
+    useEffect(() => {
+        (localStorage.getItem('isUserLoggedIn') == 'true') ? props.updateLoginState(true): props.updateLoginState(false);
+    }, []);
+
     // const [email, setEmail] = useState('');
     // const [ isEmailValid, setIsEmailValid] = useState(false);
     // const [password, setPassword] = useState('');
@@ -77,20 +80,28 @@ export const UserLoginForm = (props) => {
         }
     }
 
-    return <React.Fragment>
-        <h3>User Login Form</h3>
-        <form onSubmit={onSubmitLoginForm}>
-        <div className='form-control'>
-            <input type="text" placeholder='Registered Email' name="email" value={state.email.value}
-            onChange={(e) => emailChangeHandler(e)}></input>
-            </div>
-            <div className='form-control'>
-            <input type="password" placeholder='Passsword' name="password" value={state.password.value}
-            onChange={(e) => passwordChangeHandler(e)}></input>
-            </div>
-            <button type="submit" disabled={!(state.email.isValid && state.password.isValid)}>Login</button>
-        </form>
-    </React.Fragment>
+    return <AuthContext.Consumer>
+        {
+            (ctx) => {
+                return (
+                    <>
+                    <h3>User Login Form</h3>
+                    <form onSubmit={onSubmitLoginForm}>
+                    <div className='form-control'>
+                        <input type="text" placeholder='Registered Email' name="email" value={state.email.value}
+                        onChange={(e) => emailChangeHandler(e)}></input>
+                        </div>
+                        <div className='form-control'>
+                        <input type="password" placeholder='Passsword' name="password" value={state.password.value}
+                        onChange={(e) => passwordChangeHandler(e)}></input>
+                        </div>
+                        <button type="submit" disabled={!(state.email.isValid && state.password.isValid)}>Login</button>
+                    </form>
+                    </>
+                )
+            }
+        }
+    </AuthContext.Consumer>
 }
 
 export default UserLoginForm;
