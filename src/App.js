@@ -15,6 +15,8 @@ function App() {
   let [itemList, setItemList] = useState([1,2,3,4,5,6,7,8,9,10]);
   let [expenseList, setExpenseList] = useState([])
   let [ userLoggedIn, setUserLoggedIn ] = useState();
+  const ctx = useContext(ThemeContext);
+  let [theme, setTheme] = useState('dark');
 
   function onNewExpenseAdded(newExpense) {
     setExpenseList([newExpense, ...expenseList]);
@@ -34,8 +36,13 @@ function App() {
     alert(message);
   }
 
+  function onThemeChange(themeName) {
+    setTheme(themeName)
+  }
+
   return (
-    <HomepageWrapper className={`main-wrapper`}>
+    <ThemeContext.Provider value={{theme: theme, onThemeChange: onThemeChange}}>
+    <HomepageWrapper className={`main-wrapper ${ctx.theme}`}>
       <AuthContext.Provider value={{isLoggedIn: userLoggedIn, onConfirmation: onConfirmationHandler}}>
     { !userLoggedIn ? <UserLoginForm updateLoginState={updateLoginState}></UserLoginForm>: ''}
     { userLoggedIn ? <Dashboard updateLoginState={updateLoginState}></Dashboard>: ''}
@@ -43,6 +50,7 @@ function App() {
     {/* <ExpenseForm notifyToParent={onNewExpenseAdded}/>
     <ExpenseList expenseList={expenseList} onDeleteExpense={onDeleteExpense}/> */}
     </HomepageWrapper>
+    </ThemeContext.Provider>
   );
 }
 

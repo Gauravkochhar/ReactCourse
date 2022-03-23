@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useRef } from 'react';
 import AuthContext from '../../../store/AuthContext/AuthContext';
+import CustomInput from '../../CustomInput/CustomInput';
 
 export const UserLoginForm = (props) => {
     const loginFormReducer = (oldState, action) => {
@@ -26,7 +27,10 @@ export const UserLoginForm = (props) => {
 
     const initialState = { email: {value: '', isValid: ''}, password: {value: '', isValid: ''}};
     const [ state, dispatchFn] = useReducer(loginFormReducer, initialState);
-    
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+
     useEffect(() => {
         (localStorage.getItem('isUserLoggedIn') == 'true') ? props.updateLoginState(true): props.updateLoginState(false);
     }, []);
@@ -67,16 +71,25 @@ export const UserLoginForm = (props) => {
 
     function onSubmitLoginForm(event) {
         event.preventDefault();
-        const isEmailValid = state.email.value;
-        const isPassValid = state.password.value;
-        console.log(state.email.value);
-        console.log(state.password.value);
+        const isEmailValid = state.email.isValid;
+        const isPassValid = state.password.isValid;
+        // console.log(state.email.value);
+        // console.log(state.password.value);
+        // if(isEmailValid && isPassValid) {
+        //     localStorage.setItem('isUserLoggedIn', 'true');
+        //     props.updateLoginState(true);
+        // } else {
+        //     localStorage.setItem('isUserLoggedIn', 'false');
+        //     props.updateLoginState(false);
+        // }
+
         if(isEmailValid && isPassValid) {
             localStorage.setItem('isUserLoggedIn', 'true');
             props.updateLoginState(true);
-        } else {
-            localStorage.setItem('isUserLoggedIn', 'false');
-            props.updateLoginState(false);
+        } else if(!isEmailValid) {
+            emailRef.current.focusFromParent();
+        } else if(!isPassValid) {
+            passwordRef.current.focusFromParent();
         }
     }
 
@@ -88,14 +101,17 @@ export const UserLoginForm = (props) => {
                     <h3>User Login Form</h3>
                     <form onSubmit={onSubmitLoginForm}>
                     <div className='form-control'>
-                        <input type="text" placeholder='Registered Email' name="email" value={state.email.value}
-                        onChange={(e) => emailChangeHandler(e)}></input>
+                        {/* <input type="text" placeholder='Registered Email' name="email" value={state.email.value}
+                        onChange={(e) => emailChangeHandler(e)}></input> */}
+                        <CustomInput ref={emailRef} type="text" placeholderText="Custom Registered Email" controlName="email" value={state.email.value} onValChange={(e) => emailChangeHandler(e)}></CustomInput>
                         </div>
                         <div className='form-control'>
-                        <input type="password" placeholder='Passsword' name="password" value={state.password.value}
-                        onChange={(e) => passwordChangeHandler(e)}></input>
+                        {/* <input type="password" placeholder='Passsword' name="password" value={state.password.value}
+                        onChange={(e) => passwordChangeHandler(e)}></input> */}
+                        <CustomInput ref={passwordRef} type="password" placeholderText="Custom Passsword" controlName="password" value={state.password.value} onValChange={(e) => passwordChangeHandler(e)}></CustomInput>
                         </div>
-                        <button type="submit" disabled={!(state.email.isValid && state.password.isValid)}>Login</button>
+                        {/* disabled={!(state.email.isValid && state.password.isValid)} */}
+                        <button type="submit">Login</button>
                     </form>
                     </>
                 )
