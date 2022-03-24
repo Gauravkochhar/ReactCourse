@@ -5,7 +5,7 @@ const CustomInput = React.forwardRef((props, ref) => {
     const inputRef = useRef();
 
     function onBlur() {
-
+        
     }
 
     function focusOnInput() {
