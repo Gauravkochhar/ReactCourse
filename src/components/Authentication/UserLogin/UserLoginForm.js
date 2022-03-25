@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer, useRef } from 'react';
 import AuthContext from '../../../store/AuthContext/AuthContext';
+import Button from '../../Button/Button';
 import CustomInput from '../../CustomInput/CustomInput';
 
 export const UserLoginForm = (props) => {
@@ -90,7 +91,7 @@ export const UserLoginForm = (props) => {
             emailRef.current.focusFromParent();
         } else if(!isPassValid) {
             passwordRef.current.focusFromParent();
-        }
+        } 
     }
 
     return <AuthContext.Consumer>
@@ -99,7 +100,8 @@ export const UserLoginForm = (props) => {
                 return (
                     <>
                     <h3>User Login Form</h3>
-                    <form onSubmit={onSubmitLoginForm}>
+                    {/* onSubmit={onSubmitLoginForm} */}
+                    <form>
                     <div className='form-control'>
                         {/* <input type="text" placeholder='Registered Email' name="email" value={state.email.value}
                         onChange={(e) => emailChangeHandler(e)}></input> */}
@@ -111,7 +113,7 @@ export const UserLoginForm = (props) => {
                         <CustomInput ref={passwordRef} type="password" placeholderText="Custom Passsword" controlName="password" value={state.password.value} onValChange={(e) => passwordChangeHandler(e)}></CustomInput>
                         </div>
                         {/* disabled={!(state.email.isValid && state.password.isValid)} */}
-                        <button type="submit">Login</button>
+                        <Button type="button" onClick={onSubmitLoginForm}>Login</Button>
                     </form>
                     </>
                 )
