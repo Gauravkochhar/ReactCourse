@@ -14,6 +14,7 @@ import Dummy from './components/Dummy/Dummy';
 import Button from './components/Button/Button';
 import Dropdown from './components/Dropdown/Dropdown';
 import UseMemoLsExample from './components/UseMemoCase/UseMemoLsExample';
+import Demo from './components/ClassBasedComponents/Demo/Demo';
 
 function App() {
   let [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -23,6 +24,8 @@ function App() {
   let [theme, setTheme] = useState('dark');
   let [showMessage, setShowMessage] = useState(false);
   let [allowToggle, setAllowToggle] = useState(false);
+  let [dropdownLength, setDropdownLength] = useState(1);
+  let [dropdownCurrentValue, setDropdownCurrentValue] = useState(1);
 
   function onNewExpenseAdded(newExpense) {
     setExpenseList([newExpense, ...expenseList]);
@@ -56,10 +59,29 @@ function App() {
     setAllowToggle((state) => !state);
   }
 
+  function onDropdownChange(newValue) {
+    console.log(newValue);
+    // setDropdownLength(newValue);
+    setDropdownCurrentValue(newValue)
+  }
+
+  function onDeleteDropdownItem(i) {
+    setDropdownCurrentValue(dropdownCurrentValue-1)
+  }
+
   return (
     <>
-      <UseMemoLsExample list={useMemo(() => [5, 3, 2, 1, 4], [])}></UseMemoLsExample>
-      <Dropdown options={Array.from({ length: 10 }, (e, i) => i + 1)}></Dropdown>
+      {/* <UseMemoLsExample list={useMemo(() => [5, 3, 2, 1, 4], [])}></UseMemoLsExample> */}
+      <Demo name="Mohsin"></Demo>
+      <Dropdown dropdownCurrentValue={dropdownCurrentValue} options={Array.from({ length: dropdownLength }, (e, i) => i + 1)} onDropdownChange={onDropdownChange}></Dropdown>
+      {
+        Array.from({length: dropdownCurrentValue}).map((elm, i) => {
+          return <div className='Item' key={i}>
+          Item {i + 1}
+          <button onClick={() => onDeleteDropdownItem(i)}>Delete</button>
+          </div>
+        })
+      }
       <Dummy showMessage={showMessage}></Dummy>
       <Button onClick={onMessageToggle}>Toggle Message</Button>
       <Button onClick={onAllowToggle}>Allow Toggle</Button>
