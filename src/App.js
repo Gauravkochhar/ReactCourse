@@ -15,6 +15,8 @@ import Button from './components/Button/Button';
 import Dropdown from './components/Dropdown/Dropdown';
 import UseMemoLsExample from './components/UseMemoCase/UseMemoLsExample';
 import Demo from './components/ClassBasedComponents/Demo/Demo';
+import MovieDashboard from './components/MovieDashboard/MovieDashboard';
+import ErrorBoundary from './core/ErrorBoundary/ErrorBoundary';
 
 function App() {
   let [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -71,6 +73,9 @@ function App() {
 
   return (
     <>
+    <ErrorBoundary>
+    <MovieDashboard></MovieDashboard>
+    </ErrorBoundary>
       {/* <UseMemoLsExample list={useMemo(() => [5, 3, 2, 1, 4], [])}></UseMemoLsExample> */}
       <Demo name="Mohsin"></Demo>
       <Dropdown dropdownCurrentValue={dropdownCurrentValue} options={Array.from({ length: dropdownLength }, (e, i) => i + 1)} onDropdownChange={onDropdownChange}></Dropdown>
