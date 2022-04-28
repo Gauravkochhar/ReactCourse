@@ -12,7 +12,7 @@ class MovieDashboard extends Component {
     }
 
     componentDidMount() {
-        this.getMovies1();
+        this.getMovies();
     }
 
     getMovies() {
@@ -34,7 +34,15 @@ class MovieDashboard extends Component {
     async getMovies1() {
         try {
             this.setState({ isLoading: true})
-            const apicall = await fetch('https://swapi.dev/api/films');
+            const apicall = await fetch('https://swapi.dev/api/films', {
+                headers: {
+                    'Content-Type':  'application/json'
+                },
+                body: JSON.stringify({
+                    title: 'Sample'
+                }),
+                method: 'POST'
+            });
             const response = await apicall.json();
             console.log(response);
             if(response && response.results) {
@@ -48,6 +56,7 @@ class MovieDashboard extends Component {
             this.setState({ isLoading: false});
         }
     }
+
 
     
 
