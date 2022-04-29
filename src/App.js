@@ -20,6 +20,7 @@ import ErrorBoundary from './core/ErrorBoundary/ErrorBoundary';
 import { IncrementCounter } from './components/Custom-Hook/Increment';
 import { DecrementCounter } from './components/Custom-Hook/Decrement';
 import { CustomHookExample } from './components/Custom-Hook/CustomHookExample';
+import ReusableInput from './components/ReusableInput/ReusableInput';
 
 function App() {
   let [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -76,36 +77,9 @@ function App() {
 
   return (
     <>
-    <ErrorBoundary>
-      <CustomHookExample/>
-      <IncrementCounter/>
-      <DecrementCounter/>
-    {/* <MovieDashboard></MovieDashboard> */}
-    </ErrorBoundary>
-      {/* <UseMemoLsExample list={useMemo(() => [5, 3, 2, 1, 4], [])}></UseMemoLsExample> */}
-      <Demo name="Mohsin"></Demo>
-      <Dropdown dropdownCurrentValue={dropdownCurrentValue} options={Array.from({ length: dropdownLength }, (e, i) => i + 1)} onDropdownChange={onDropdownChange}></Dropdown>
-      {
-        Array.from({length: dropdownCurrentValue}).map((elm, i) => {
-          return <div className='Item' key={i}>
-          Item {i + 1}
-          <button onClick={() => onDeleteDropdownItem(i)}>Delete</button>
-          </div>
-        })
-      }
-      <Dummy showMessage={showMessage}></Dummy>
-      <Button onClick={onMessageToggle}>Toggle Message</Button>
-      <Button onClick={onAllowToggle}>Allow Toggle</Button>
-      <ThemeContext.Provider value={{ theme: theme, onThemeChange: onThemeChange }}>
-        <HomepageWrapper className={`main-wrapper ${ctx.theme}`}>
-          <AuthContext.Provider value={{ isLoggedIn: userLoggedIn, onConfirmation: onConfirmationHandler }}>
-            {!userLoggedIn ? <UserLoginForm updateLoginState={updateLoginState}></UserLoginForm> : ''}
-            {userLoggedIn ? <Dashboard updateLoginState={updateLoginState}></Dashboard> : ''}
-          </AuthContext.Provider>
-          {/* <ExpenseForm notifyToParent={onNewExpenseAdded}/>
-    <ExpenseList expenseList={expenseList} onDeleteExpense={onDeleteExpense}/> */}
-        </HomepageWrapper>
-      </ThemeContext.Provider>
+    <div class="container">
+    <ReusableInput/>
+    </div>
     </>
   );
 }

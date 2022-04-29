@@ -1,0 +1,10 @@
+input {
+    height: 40px;
+    width: 300px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input.invalid-input {
+    background-color: rgb(223, 183, 183);
+}
