@@ -21,6 +21,14 @@ import { IncrementCounter } from './components/Custom-Hook/Increment';
 import { DecrementCounter } from './components/Custom-Hook/Decrement';
 import { CustomHookExample } from './components/Custom-Hook/CustomHookExample';
 import ReusableInput from './components/ReusableInput/ReusableInput';
+import { Welcome } from './Pages/Welcome';
+import { Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { Aboutus } from './Pages/Aboutus';
+import { MainHeader } from './utils/MainHeader';
+import { Products } from './Pages/Products';
+import { ProductDetail } from './Pages/ProductDetail';
+import { Switch } from 'react-router-dom';
 
 function App() {
   let [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -76,11 +84,30 @@ function App() {
   }
 
   return (
-    <>
-    <div class="container">
-    <ReusableInput/>
+    <div>
+      <h1>Router Page</h1>
+      <MainHeader/>
+      <Switch>
+      <Route path="/" exact>
+        <Redirect to="/home" />
+      </Route>
+      <Route path="/home">
+        <Welcome/>
+      </Route>
+      <Route path="/products" exact>
+        <Products/>
+      </Route>
+      <Route path="/products/:productId">
+        <ProductDetail/>
+      </Route>
+      <Route path="/aboutus">
+        <Aboutus/>
+      </Route>
+      <Route path="*">
+        <h1>Page Not Found</h1>
+      </Route>
+      </Switch>
     </div>
-    </>
   );
 }
 
