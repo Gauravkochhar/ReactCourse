@@ -29,6 +29,7 @@ import { MainHeader } from './utils/MainHeader';
 import { Products } from './Pages/Products';
 import { ProductDetail } from './Pages/ProductDetail';
 import { Switch } from 'react-router-dom';
+import ClassbasedCounterRedux from './Pages/ClassbasedCounterRedux';
 
 function App() {
   let [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -93,6 +94,9 @@ function App() {
       </Route>
       <Route path="/home">
         <Welcome/>
+      </Route>
+      <Route path="/counterExample">
+        <ClassbasedCounterRedux/>
       </Route>
       <Route path="/products" exact>
         <Products/>

@@ -10,6 +10,9 @@ export const MainHeader = () => {
                     <NavLink activeClassName={MainHeaderStyle.active} to="/home">Home</NavLink>
                 </li>
                 <li className={MainHeaderStyle['navbar-ul-li']}>
+                    <NavLink activeClassName={MainHeaderStyle.active} to="/counterExample">Class Based Redux Counter</NavLink>
+                </li>
+                <li className={MainHeaderStyle['navbar-ul-li']}>
                     <NavLink activeClassName={MainHeaderStyle.active} to="/products">Products</NavLink>
                 </li>
                 <li className={MainHeaderStyle['navbar-ul-li']}>
