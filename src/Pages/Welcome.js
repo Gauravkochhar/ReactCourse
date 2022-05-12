@@ -1,20 +1,27 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 import { Route } from "react-router-dom"
+import { counterActions } from "../store";
+
 
 export const Welcome = () => {
 
-    const counter = useSelector(store => store.counter);
+    const counter = useSelector(store => store.counterScreen.counter);
     const dispatch = useDispatch();
     const match = useRouteMatch();
     console.log(match);
 
+    
     const incrementHandler = () => {
-        dispatch({ type: 'increment'});
+        dispatch(counterActions.increment());
+    }
+
+    const increaseHandler = () => {
+        dispatch(counterActions.increase(5));
     }
 
     const decrementHandler = () => {
-        dispatch({ type: 'decrement'});
+        dispatch(counterActions.decrement());
     }
 
     return <>
@@ -22,6 +29,7 @@ export const Welcome = () => {
         Counter Value: {counter}
         <div>
             <button onClick={incrementHandler}>Increment</button><br/>
+            <button onClick={increaseHandler}>Increase</button><br/>
             <button onClick={decrementHandler}>Decrement</button>
         </div>
 
