@@ -1,14 +1,16 @@
 import { useLocation } from "react-router-dom";
-import { useRouteMatch } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+// import { useRouteMatch } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"
 
 export const Products = () => {
 
-    const history = useHistory();
+    // const history = useHistory();
+    const navigate = useNavigate();
     const location = useLocation();
-    const match = useRouteMatch();
-    console.log(match);
+    // const match = useRouteMatch();
+    // console.log(match);
     const queryParams = new URLSearchParams(location.search);
     const isSortingAsc = queryParams.get('sort') == 'asc';
 

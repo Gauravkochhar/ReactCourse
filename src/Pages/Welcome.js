@@ -1,15 +1,19 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+// import { useRouteMatch } from "react-router-dom";
+import { Routes, useLocation, useMatch } from "react-router-dom";
 import { Route } from "react-router-dom"
-import { counterActions } from "../store";
+import { counterActions } from "../store/Slice/counterSlice";
+
 
 
 export const Welcome = () => {
 
     const counter = useSelector(store => store.counterScreen.counter);
     const dispatch = useDispatch();
-    const match = useRouteMatch();
-    console.log(match);
+    // const match = useRouteMatch();
+    // const match = useMatch('/counterExample/new-user');
+    const { pathname } = useLocation();
+    console.log('pathname: ', pathname);
 
     
     const incrementHandler = () => {
@@ -33,8 +37,9 @@ export const Welcome = () => {
             <button onClick={decrementHandler}>Decrement</button>
         </div>
 
-        <Route path={`${match.path}/new-user`}>
-            <p>Welcome New User</p>
+        <Routes>
+        <Route path={`/home/new-user`} element={<p>Welcome New User</p>}>
         </Route>
+        </Routes>
     </>
 }

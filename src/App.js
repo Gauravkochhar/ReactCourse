@@ -22,14 +22,15 @@ import { DecrementCounter } from './components/Custom-Hook/Decrement';
 import { CustomHookExample } from './components/Custom-Hook/CustomHookExample';
 import ReusableInput from './components/ReusableInput/ReusableInput';
 import { Welcome } from './Pages/Welcome';
-import { Route } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { Aboutus } from './Pages/Aboutus';
 import { MainHeader } from './utils/MainHeader';
 import { Products } from './Pages/Products';
 import { ProductDetail } from './Pages/ProductDetail';
-import { Switch } from 'react-router-dom';
 import ClassbasedCounterRedux from './Pages/ClassbasedCounterRedux';
+import { AddProductForm } from './Pages/addProductForm';
+import { ProductList } from './Pages/productList';
 
 function App() {
   let [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -88,29 +89,20 @@ function App() {
     <div>
       <h1>Router Page</h1>
       <MainHeader/>
-      <Switch>
-      <Route path="/" exact>
-        <Redirect to="/home" />
+      <Routes>
+      <Route path="/" element={<Navigate to="/home" />} exact>
+        {/* <Redirect to="/home" /> */}
+        
       </Route>
-      <Route path="/home">
-        <Welcome/>
-      </Route>
-      <Route path="/counterExample">
-        <ClassbasedCounterRedux/>
-      </Route>
-      <Route path="/products" exact>
-        <Products/>
-      </Route>
-      <Route path="/products/:productId">
-        <ProductDetail/>
-      </Route>
-      <Route path="/aboutus">
-        <Aboutus/>
-      </Route>
-      <Route path="*">
-        <h1>Page Not Found</h1>
-      </Route>
-      </Switch>
+      <Route path="/home" element={<Welcome />}></Route>
+      <Route path="/counterExample" element={<ClassbasedCounterRedux/>}></Route>
+      <Route path="/products" element={<Products/>} exact></Route>
+      <Route path="/products/:productId" element={<ProductDetail/>}></Route>
+      <Route path="/aboutus" element={<Aboutus/>}></Route>
+      <Route path="/addProduct" element={<AddProductForm/>}></Route>
+      <Route path="/productList" element={<ProductList/>}></Route>
+      <Route path="*" element={<h1>Page Not Found</h1>}></Route>
+      </Routes>
     </div>
   );
 }

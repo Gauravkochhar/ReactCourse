@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { counterActions } from '../store';
+import { counterActions } from '../store/Slice/counterSlice';
 class ClassbasedCounterRedux extends React.Component {
     
     constructor(props) {
