@@ -3,7 +3,7 @@ import Expense from './components/Expense/Expense';
 import './App.css';
 import HomepageWrapper from './components/HomepageWrapper/HomepageWrapper';
 import ExpenseForm from './components/ExpenseForm/ExpenseForm';
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import ExpenseList from './components/ExpenseList/ExpenseList';
 import UserLoginForm from './components/Authentication/UserLogin/UserLoginForm';
 import Dashboard from './components/Dashboard/Dasboard';
@@ -30,7 +30,12 @@ import { Products } from './Pages/Products';
 import { ProductDetail } from './Pages/ProductDetail';
 import ClassbasedCounterRedux from './Pages/ClassbasedCounterRedux';
 import { AddProductForm } from './Pages/addProductForm';
-import { ProductList } from './Pages/productList';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { EcommerceProductList } from './Pages/ecommerceProductList';
+import { useDispatch, useSelector } from 'react-redux';
+import { productStockActions } from './store/Slice/productStockSlice';
+import { CartList } from './Pages/CartList';
 
 function App() {
   let [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -42,10 +47,36 @@ function App() {
   let [allowToggle, setAllowToggle] = useState(false);
   let [dropdownLength, setDropdownLength] = useState(1);
   let [dropdownCurrentValue, setDropdownCurrentValue] = useState(1);
+  const dispatch = useDispatch();
+  const storeProductList = useSelector((store) => store.productStock.products);
+
+  const fetchProducts = async () => {
+    try {
+        const response = await fetch('https://ecommerce-a57e0-default-rtdb.firebaseio.com/productList.json', {
+        method: 'GET'
+    });
+    if(!response.ok) {
+        throw new Error('Something Went Wrong');
+    }
+    const responseJson = await response.json();
+    let productList = [];
+        for (const key in responseJson) {
+            productList.push(responseJson[key]);
+        }
+    dispatch(productStockActions.saveFetchedProductList(productList));
+    console.log('responseJson:', responseJson)
+    }
+    catch(err) {
+        toast.error(err.message || 'Something Went Wrong');
+    }
+}
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   function onNewExpenseAdded(newExpense) {
     setExpenseList([newExpense, ...expenseList]);
-
   }
 
   function onDeleteExpense(expenseId) {
@@ -87,6 +118,7 @@ function App() {
 
   return (
     <div>
+      <ToastContainer closeButton={false} position="top-right" />
       <h1>Router Page</h1>
       <MainHeader/>
       <Routes>
@@ -100,7 +132,8 @@ function App() {
       <Route path="/products/:productId" element={<ProductDetail/>}></Route>
       <Route path="/aboutus" element={<Aboutus/>}></Route>
       <Route path="/addProduct" element={<AddProductForm/>}></Route>
-      <Route path="/productList" element={<ProductList/>}></Route>
+      <Route path="/productList" element={<EcommerceProductList/>}></Route>
+      <Route path="/cartList" element={<CartList/>}></Route>
       <Route path="*" element={<h1>Page Not Found</h1>}></Route>
       </Routes>
     </div>

@@ -1,8 +1,13 @@
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom"
 import MainHeaderStyle from '../styles/MainHeader.module.css';
 
 export const MainHeader = () => {
+
+    const storeProductList = useSelector((store) => store.productStock.products);
+    const cartList = useSelector((store) => store.cartStock.cartList);
+
     return <header>
         <nav>
             <ul className={MainHeaderStyle['navbar-ul']}>
@@ -28,11 +33,11 @@ export const MainHeader = () => {
                 </li>
                 <li className={MainHeaderStyle['navbar-ul-li']}>
                     {/* <NavLink activeClassName={MainHeaderStyle.active} to="/aboutus">About us</NavLink> */}
-                    <NavLink className={(navdata) => navdata.isActive ? MainHeaderStyle.active: ''} to="/productList">Product List</NavLink>
+                    <NavLink className={(navdata) => navdata.isActive ? MainHeaderStyle.active: ''} to="/productList">Product List ({storeProductList.length})</NavLink>
                 </li>
             </ul>
             <ul>
-                <li>Cart</li>
+                <NavLink className={(navdata) => navdata.isActive ? MainHeaderStyle.active: ''} to="/cartList">Cart Items ({cartList.length})</NavLink>
             </ul>
         </nav>
     </header>

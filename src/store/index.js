@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { counterReducer } from './Slice/counterSlice';
+import { ProductStockReducer } from './Slice/productStockSlice';
+import { RootReducer } from './Slice/root.reducer';
 // const counterReducerFn = (state = {counter: 0}, action) => {
 //     if(action.type == 'increment') {
 //         return {
@@ -22,8 +24,11 @@ import { counterReducer } from './Slice/counterSlice';
 
 
 
-const store = configureStore({reducer: {
-    counterScreen: counterReducer
-}});
+// const store = configureStore({reducer: {
+//     counterScreen: counterReducer,
+//     productStock: ProductStockReducer
+// }});
+
+const store = configureStore({reducer: RootReducer});
 
 export default store;
